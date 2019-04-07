@@ -22,19 +22,52 @@ def main():
     estados = int(input())
 
     #Leitura do alfabeto e da quantidade de simbolos
-    alfabeto = [x for x in input().split(' ')]
-    simbolos = alfabeto.pop(0)
+    st = input()
+    alfabeto = []
+    i = 0
+    while i < len(st):
+        alfabeto.append(st[i])
+        i = i + 2
+    simbolos = int(alfabeto.pop(0))
 
     #Leitura da tabela de transição
     tabtran = {}
+    i = 0
     for i in range(estados):
+        tabtran[i] = {}
         for j in range(simbolos):
-            #Leitura da posição atual, seu trigger e o destino na tabela de transição
-            atual, trig, prox = input().split(' ')
-            tabtran[i][trig] = int(prox)
+            #Leitura da posição atual, seu trigger 
+            #e o destino na tabela de transição
+            st = input()
+            atual = int(st[0])
+            trig = st[2]
+            prox = int(st[4])
+            tabtran[i][trig] = prox
     
+    #Leitura do Estado Inicial
     inicial = int(input())
-    
+
+    #Leitura dos Estados Finais
+    finais = [-1 for x in range(estados)]
+    st = input().split(' ')
+    st.pop(0)
+    i = 0
+    while i < len(st):
+        finais[int(st[i])] = 1
+        i = i + 1
+
+    #Leitura e verificação da string a ser verificada
+    atual = inicial
+    buf = input()
+    bpos = 0
+    while atual != -1 and bpos < len(buf):
+        atual = tabtran[atual][buf[bpos]]
+        bpos = bpos + 1
+    if atual != -1 and finais[atual] == 1:
+        print('Aceito')
+    else:
+        print('Rejeito')
+
 
 main()
 
