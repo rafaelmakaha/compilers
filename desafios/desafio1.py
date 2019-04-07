@@ -2,12 +2,43 @@
     Aluno: Rafael Makaha Gomes Ferreira
     Matrícula: 160142369
 
+    Desafio 1.
     A sua tarefa é projetar um Autômato Finito 
     que aceita uma linguagem L com palavras 
     pertencentes ao alfabeto [A-Za-z\ ] tal que 
     cada palavra w não contenha letras maíusculas 
     após uma minúscula.
 
+    Solução.
+    1. Leitura do alfabeto
+    2. Leitura dos estados do autômato
+    3. Cada estado possui apenas 3 caminhos.
+        Os caminhos são determinados por: 
+            M: maiúsuclas
+            m: minúsuclas
+             : espaços
+    4. É varrida a string a ser verificada
+    5. Cada char da string promove o caminho entre os estados
+        da máquina de estados.
+
+    Entrada.
+    4
+    53 A B C D E F G H I J K L M N O P Q R S T U V W X Y Z a b c d e f g h i j k l m n o p q r s t u v w x y z  
+    0 M 0
+    0 m 1
+    0   1
+    1 M 2
+    1 m 1
+    1   3
+    2 M 2
+    2 m 2
+    2   2
+    3 M 0
+    3 m 1
+    3   3
+    0
+    3 0 1 3
+    PortUgal
 
 '''
 def main():

@@ -29,6 +29,31 @@
         2. Fazer uma das duas possibilidades já salvas no dicionário/matriz.
 
     O código feito em sala de aula foi adaptado para python.
+
+    Entrada.
+    9
+    53 A B C D E F G H I J K L M N O P Q R S T U V W X Y Z a b c d e f g h i j k l m n o p q r s t u v w x y z  
+    0 m 1
+    0 $ 0
+    1 a 2
+    1 $ 0
+    2 r 3
+    2 $ 0
+    3 a 4
+    3 $ 0
+    4 t 5
+    4 $ 0
+    5 o 6
+    5 $ 0
+    6 n 7
+    6 $ 0
+    7 a 8
+    7 $ 0
+    8 $ 8
+    8 $ 8
+    0
+    1 8
+    Minha alegria eh fazer AFDs
 '''
 
 def main():
