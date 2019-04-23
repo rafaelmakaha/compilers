@@ -3,9 +3,9 @@
     Matrícula: 160142369
 
     Desafio 2.
-    A sua tarefa é projetar um Autômato Finito 
-    que aceita uma linguagem L com palavras pertencentes 
-    ao alfabeto [A-Za-z\ ] tal que cada palavra w não 
+    A sua tarefa é projetar um Autômato Finito
+    que aceita uma linguagem L com palavras pertencentes
+    ao alfabeto [A-Za-z\ ] tal que cada palavra w não
     contenha letras maíusculas após uma minúscula.
 
     Solução:
@@ -20,8 +20,8 @@
 
         Sobre as entradas...
         1. Fazer as entradas dos estados com os chars que esperamos.
-        2. Fazer as entradas dos estados com os 
-            chars que não esperamos, mas chamar eles 
+        2. Fazer as entradas dos estados com os
+            chars que não esperamos, mas chamar eles
             de uma variável só, tipo '$'.
 
         Quando estivermos verifiando a string alvo...
@@ -32,7 +32,7 @@
 
     Entrada.
     9
-    53 A B C D E F G H I J K L M N O P Q R S T U V W X Y Z a b c d e f g h i j k l m n o p q r s t u v w x y z  
+    53 A B C D E F G H I J K L M N O P Q R S T U V W X Y Z a b c d e f g h i j k l m n o p q r s t u v w x y z
     0 m 1
     0 $ 0
     1 a 2
@@ -73,7 +73,7 @@ def main():
     for i in range(estados):
         tabtran[i] = {}
         for j in range(possibilidades):
-            #Leitura da posição atual, seu trigger 
+            #Leitura da posição atual, seu trigger
             #e o destino na tabela de transição
             st = input()
             atual = int(st[0])
@@ -109,7 +109,7 @@ def main():
             bpos = bpos + 1
         else:
             atual = -1
-        
+
     if atual != -1 and finais[atual] == 1:
         print('Aceito')
     else:
@@ -117,4 +117,3 @@ def main():
 
 
 main()
-
