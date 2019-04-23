@@ -57,34 +57,22 @@
 '''
 
 
-def foo(atual, buf, tabtran, finais, alfabeto):
+def foo(atual, buf, bpos, tabtran, finais, alfabeto):
     # Verifica se o bufer esta vazio
     # Verifica se todas as letras lidas pertencem ao alfabeto
     # Verifica se o último estado é um estado final
-    if len(buf)==0 and atual != -1 and finais[atual] == 1:
+    if len(buf)==0 and finais[atual] == 1:
         return True
 
     # Verifica se existem proximos estados possiveis
-    elif len(tabtran[atual][buf[bpos]])== 0:
+    elif len(tabtran[atual][buf[bpos]])== 0 or not(buf[bpos] in alfabeto):
         return False
     else:
         # Chama a funcao recusivamente para cada possibilidade
         for i in range(len(tabtran[atual][buf[bpos]])):
             atual = tabtran[atual][buf[bpos]][i]
-            return foo(atual, buf, trabtran, finais)
-
-
-    while atual != -1 and bpos < len(buf):
-
-        if buf[bpos] in alfabeto:
-            if buf[bpos] in tabtran[atual]:
-                atual = tabtran[atual][buf[bpos]]
-            else:
-                atual = tabtran[atual]['$']
-            bpos = bpos + 1
-        else:
-            atual = -1
-
+            if foo(atual, buf, bpos+1, trabtran, finais):
+                return True
 
 def main():
     #Leitura da quantidade de estados
@@ -98,14 +86,15 @@ def main():
 
     #Leitura da tabela de transição
     tabtran = {}
-    possibilidades = 2
+    possibilidades = estados * simbolos
     i = 0
     for i in range(estados):
         tabtran[i] = {}
         for j in range(possibilidades):
             #Leitura da posição atual, seu trigger
             #e o destino na tabela de transição
-            st = [map(str, input().split())]
+            st = input().split(' ')
+            print(st)
             atual = st[0]
             trig = st[1]
             if not int(st[2]):
@@ -132,10 +121,10 @@ def main():
     buf = input()
     bpos = 0
 
-    x = foo()
+    x = foo(atual, buf, bpos, tabtran, finais, alfabeto)
 
 
-    if atual != -1 and finais[atual] == 1:
+    if x:
         print('Aceito')
     else:
         print('Rejeito')
