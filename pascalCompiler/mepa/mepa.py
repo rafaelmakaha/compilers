@@ -1,7 +1,9 @@
 s = -1
 M = []
-i = 0
-t = []
+comandos = []
+listaRotulos = []
+cmd = []
+j = 0
 
 def INPP():
     global s
@@ -146,7 +148,11 @@ def DSVF(p):
 def DSVS(p):
     global s
     global M
-    i = p
+    global j
+    if p in listaRotulos:
+        return listaRotulos[p][1]
+    else:
+        print('Linha " + j + ": RunTime error rotulo TT invalido')
 
 def NADA():
     global s
@@ -162,9 +168,10 @@ def AMEM(n):
 def DMEM(n):
     global s
     global M
+    global j
     s = s - int(n)
     if n > s:
-        print('RunTime error. Stack underflow')
+        print('Linha ' + j + 'RunTime error. Stack underflow')
         exit()
     for i in range(int(n)):
         M.pop()
@@ -173,26 +180,28 @@ def CRVL(e,n):
     global s
     global M
     s = s + 1
-    M.append(M[n])
-    M[s] = M[n]
+    M.append(M[int(n)])
+    # M[s] = M[int(n)]
     
 def ARMZ(e,n):
     global s
     global M
-    M[n] = M[s]
+    M[int(n)] = M[s]
+    M.pop()
     s = s - 1
 
 def IMPR():
     global s
     global M
     print(M[s])
+    M.pop()
     s = s - 1
 
 def LEIT(entrada):
     global s
     global M
     s = s + 1
-    M[s] = entrada
+    M.append(entrada)
 
 def PARA():
     exit()
@@ -228,18 +237,27 @@ func = {
 
 if __name__ == "__main__":
     import sys
-   
+    
     with open(sys.argv[1],'r') as f:
-
-        for j,line in enumerate(f):
-            t = list(map(str,line.replace('\n','').replace(',','').split()))
-            if len(t) == 1:
-                func[t[0]]()
-            elif len(t) == 2:
-                func[t[0]](t[1])
-            else:
-                func[t[0]](t[1],t[2])
-            print(t)
-            print(M)
+        comandos = f.readlines()
+        for j in range(len(comandos)):
+            # Lê uma linha
+            cmd = list(map(str,comandos[j].replace('\n','').replace(',','').split()))
+            print('comando: ' , cmd)
+            print('mem: ' , M)
+            print('rot: ' , listaRotulos)
             print()
-    print()
+            if ':' in cmd[0]:
+                listaRotulos.append([cmd[0],j])
+            else:
+                
+                # Verifica a quantidade de parâmetros no comando a ser executado
+                if len(cmd) == 1:
+                    func[cmd[0]]()
+                elif len(cmd) == 2:
+                    func[cmd[0]](cmd[1])
+                    # j = func[cmd[0]](cmd[1])
+                else:
+                    func[cmd[0]](cmd[1],cmd[2])
+
+    print(comandos)
