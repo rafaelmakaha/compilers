@@ -140,14 +140,14 @@ def CMEG():
 def DSVF(p):
     global s
     global M
-    if p in listaRotulos.keys():
-        return listaRotulos[p]
-    else:
+    if not(p in listaRotulos.keys()):
         print('Linha '+str(j+1)+': RunTime error rotulo ' + str(p) + ' invalido')
         exit()
+    
     if M[s] == 0:
         M.pop()
         s = s - 1
+        return listaRotulos[p]
     else:
         M.pop()
         s = s - 1
@@ -172,7 +172,9 @@ def AMEM(n):
     global s
     global M 
     s = s + int(n)
-    M = [i for i in range(int(n))]
+    for k in range(int(n)):
+        M.append(k)
+    # M = [i for i in range(int(n))]
 
 def DMEM(n):
     global s
