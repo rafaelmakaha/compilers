@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+
 s = -1
 M = []
 comandos = []
@@ -138,10 +140,14 @@ def CMEG():
 def DSVF(p):
     global s
     global M
+    if p in listaRotulos.keys():
+        return listaRotulos[p]
+    else:
+        print('Linha '+str(j+1)+': RunTime error rotulo ' + str(p) + ' invalido')
+        exit()
     if M[s] == 0:
         M.pop()
         s = s - 1
-        return listaRotulos[p]
     else:
         M.pop()
         s = s - 1
@@ -173,7 +179,7 @@ def DMEM(n):
     global M
     global j
     s = s - int(n)
-    if int(n) > s:
+    if s < -1:
         print('Linha '+str(j+1)+': RunTime error. Stack underflow')
         exit()
     for i in range(int(n)):
