@@ -1,7 +1,7 @@
 s = -1
 M = []
 comandos = []
-listaRotulos = []
+listaRotulos = {}
 cmd = []
 j = 0
 
@@ -139,20 +139,22 @@ def DSVF(p):
     global s
     global M
     if M[s] == 0:
-        i = p
+        M.pop()
+        s = s - 1
+        return listaRotulos[p]
     else:
-        i = i + 1
-    M.pop()
-    s = s - 1
+        M.pop()
+        s = s - 1
+        return j
     
 def DSVS(p):
     global s
     global M
     global j
     if p in listaRotulos:
-        return listaRotulos[p][1]
+        return listaRotulos[p]
     else:
-        print('Linha " + j + ": RunTime error rotulo TT invalido')
+        print('Linha ' , j , ': RunTime error rotulo ' , p , ' invalido')
 
 def NADA():
     global s
@@ -239,25 +241,47 @@ if __name__ == "__main__":
     import sys
     
     with open(sys.argv[1],'r') as f:
-        comandos = f.readlines()
-        for j in range(len(comandos)):
-            # Lê uma linha
-            cmd = list(map(str,comandos[j].replace('\n','').replace(',','').split()))
-            print('comando: ' , cmd)
-            print('mem: ' , M)
-            print('rot: ' , listaRotulos)
-            print()
+        # Mapeamento de todos os comandos e rotulos
+        for index,line in enumerate(f):
+            # Formata a linha com comandos
+            cmd = list(map(str,line.replace('\n','').replace(',','').split()))
+            # Caso seja um rótulo, adiciona na lista de rotulos
             if ':' in cmd[0]:
-                listaRotulos.append([cmd[0],j])
-            else:
-                
-                # Verifica a quantidade de parâmetros no comando a ser executado
-                if len(cmd) == 1:
-                    func[cmd[0]]()
-                elif len(cmd) == 2:
-                    func[cmd[0]](cmd[1])
-                    # j = func[cmd[0]](cmd[1])
+                listaRotulos[cmd[0].replace(':','')] = index
+        
+            cmd[0] = cmd[0].replace(':','')
+            # Adiciona na lista de comandos
+            comandos.append(cmd)
+
+        # print(comandos)
+        while j < len(comandos):
+            # print('comando: ' , comandos[j])
+            # print('mem: ' , M)
+            # print('rot: ' , listaRotulos)
+            # print('j: ', j)
+            # print()
+            
+            # Se for um rotulo, executar proximo comando
+            if comandos[j][0] in listaRotulos.keys():
+                j += 1
+                continue
+
+            # Verifica a quantidade de parâmetros no comando a ser executado
+            if len(comandos[j]) == 1:
+                func[comandos[j][0]]()
+            elif len(comandos[j]) == 2:
+                # Caso seja um desvio, altera o fluxo do loop
+                if comandos[j][0] == 'DSVF' or comandos[j][0] == 'DSVS':
+                    j = func[comandos[j][0]](comandos[j][1])
+                    j += 1
+                    continue
                 else:
-                    func[cmd[0]](cmd[1],cmd[2])
+                    func[comandos[j][0]](comandos[j][1])
+
+            else:
+                func[comandos[j][0]](comandos[j][1],comandos[j][2])
+            
+            # incremento do loop
+            j += 1
 
     print(comandos)
