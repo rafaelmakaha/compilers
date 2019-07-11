@@ -154,7 +154,8 @@ def DSVS(p):
     if p in listaRotulos:
         return listaRotulos[p]
     else:
-        print('Linha ' , j , ': RunTime error rotulo ' , p , ' invalido')
+        print('Linha '+str(j+1)+': RunTime error rotulo ' + str(p) + ' invalido')
+        exit()
 
 def NADA():
     global s
@@ -172,8 +173,8 @@ def DMEM(n):
     global M
     global j
     s = s - int(n)
-    if n > s:
-        print('Linha ' + j + 'RunTime error. Stack underflow')
+    if int(n) > s:
+        print('Linha '+str(j+1)+': RunTime error. Stack underflow')
         exit()
     for i in range(int(n)):
         M.pop()
@@ -199,11 +200,11 @@ def IMPR():
     M.pop()
     s = s - 1
 
-def LEIT(entrada):
+def LEIT():
     global s
     global M
     s = s + 1
-    M.append(entrada)
+    M.append(int(input()))
 
 def PARA():
     exit()
@@ -283,5 +284,3 @@ if __name__ == "__main__":
             
             # incremento do loop
             j += 1
-
-    print(comandos)
